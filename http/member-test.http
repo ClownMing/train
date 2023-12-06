@@ -3,3 +3,5 @@ Accept: application/json
 
 ###
 
+GET http://localhost:8000/member/test/get
+Accept: application/json
