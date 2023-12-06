@@ -3,5 +3,4 @@ server:
   port: 8001
   servlet:
     context-path: /member
-logging:
-  config: classpath:logback-spring.xml
+
