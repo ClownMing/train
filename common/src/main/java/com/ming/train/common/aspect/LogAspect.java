@@ -1,5 +1,6 @@
-package com.ming.train.member.aspect;
+package com.ming.train.common.aspect;
 
+import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import jakarta.servlet.ServletRequest;
@@ -14,6 +15,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -42,6 +44,8 @@ public class LogAspect {
 
     @Before("controllerPointcut()")
     public void doBefore(JoinPoint joinPoint) {
+        // 请求流水号
+        MDC.put("LOG_ID", System.currentTimeMillis() + RandomUtil.randomString(3));
         // 开始打印请求日志
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
@@ -56,7 +60,6 @@ public class LogAspect {
         // 打印请求参数
         Object[] args = joinPoint.getArgs();
         // LOG.info("请求参数：{}", JSONObject.toJSONString(args));
-
         // 排除特殊类型的参数，如文件类型
         Object[] arguments = new Object[args.length];
         for (int i = 0; i < args.length; i++) {

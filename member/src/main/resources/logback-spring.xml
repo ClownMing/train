@@ -25,7 +25,8 @@
             <level>debug</level>
         </filter>
         <encoder>
-            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+<!--            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>-->
+            <pattern>%d{mm:ss.SSS} %highlight(%-5level) %blue(%-30logger{30}:%-4line) %thread %green(%-18X{LOG_ID}) %msg%n</pattern>
             <!-- 设置字符集 -->
             <charset>UTF-8</charset>
         </encoder>
