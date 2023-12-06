@@ -3,4 +3,24 @@ server:
   port: 8001
   servlet:
     context-path: /member
+spring:
+  devtools:
+    livereload:
+      # 防止热部署端口冲突
+      port: 35730
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/train_member?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: train_member
+    password: 775821
 
+# mybatis xml 路径
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
+logging:
+  level:
+    com:
+      ming:
+        train:
+          member:
+            mapper: trace
