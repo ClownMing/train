@@ -3,9 +3,9 @@ package com.ming.train.member.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.jwt.JWTUtil;
 import com.ming.train.common.exception.BusinessException;
 import com.ming.train.common.exception.BusinessExceptionEnum;
+import com.ming.train.common.util.JwtUtils;
 import com.ming.train.common.util.SnowUtil;
 import com.ming.train.member.domain.Member;
 import com.ming.train.member.domain.MemberExample;
@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author clownMing
@@ -91,9 +90,7 @@ public class MemberService {
         MemberLoginResp memberLoginResp =
                 BeanUtil.copyProperties(memberDB, MemberLoginResp.class);
         // 生成jwt token
-        Map<String, Object> map = BeanUtil.beanToMap(memberLoginResp);
-        final String key = "clownMing";
-        String token = JWTUtil.createToken(map, key.getBytes());
+        String token = JwtUtils.createToken(BeanUtil.beanToMap(memberLoginResp));
         memberLoginResp.setToken(token);
         return memberLoginResp;
     }
