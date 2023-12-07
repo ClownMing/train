@@ -63,11 +63,10 @@ public class MemberService {
             member.setMobile(mobile);
             memberMapper.insert(member);
         }
-        LOG.info("手机号存在");
         // 生成验证码
 //        String code = RandomUtil.randomString(4);
         String code = "8888";
-        LOG.info("生成短信验证码：{}", code);
+        LOG.info("手机号存在 > 生成短信验证码：{}", code);
         // 保存短信记录表：手机号，短信验证码，有效期，是否已使用，业务类型，发送时间，使用时间
         LOG.info("保存短信记录表");
         // 对接短信通道，发送短信
