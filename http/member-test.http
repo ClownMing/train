@@ -7,18 +7,25 @@ GET http://localhost:8000/member/member/count
 
 ###
 POST http://localhost:8000/member/member/register
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 
-mobile=1222
+{
+  "mobile": "18093885990",
+}
 
 ###
 POST http://localhost:8000/member/member/send-code
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 
-mobile=18093885990
+{
+  "mobile": "18093885990"
+}
 
 ###
 POST http://localhost:8000/member/member/login
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 
-mobile=18093885990&code=8888
+{
+  "mobile": "18093885990",
+  "code": "8888"
+}

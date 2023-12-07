@@ -8,6 +8,9 @@ public class MemberLoginResp {
 
     private String mobile;
 
+    // jwt token
+    private String token;
+
     public MemberLoginResp(Long id, String mobile) {
         this.id = id;
         this.mobile = mobile;
@@ -27,5 +30,23 @@ public class MemberLoginResp {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("MemberLoginResp{");
+        sb.append("id=").append(id);
+        sb.append(", mobile='").append(mobile).append('\'');
+        sb.append(", token='").append(token).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }
