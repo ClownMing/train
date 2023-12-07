@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Pattern;
 
 /**
  * @author clownMing
+ * 会员-短信验证码请求
  */
 public class MemberSendCodeReq {
 

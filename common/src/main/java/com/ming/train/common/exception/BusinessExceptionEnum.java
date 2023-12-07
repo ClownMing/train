@@ -4,7 +4,10 @@ package com.ming.train.common.exception;
  * @author clownMing
  */
 public enum BusinessExceptionEnum {
-    MEMBER_MOBILE_EXIST("手机号已注册");
+    MEMBER_MOBILE_EXIST("手机号已注册"),
+    MEMBER_MOBILE_NOT_EXIST("请先获取短信验证码"),
+    MEMBER_MOBILE_CODE_ERROR("验证码错误");
+
 
     BusinessExceptionEnum(String desc) {
         this.desc = desc;

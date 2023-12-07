@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 /**
  * @author clownMing
+ * 会员-注册请求
  */
 public class MemberRegisterReq {
 
