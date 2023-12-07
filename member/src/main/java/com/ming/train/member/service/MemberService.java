@@ -3,6 +3,7 @@ package com.ming.train.member.service;
 import cn.hutool.core.collection.CollUtil;
 import com.ming.train.common.exception.BusinessException;
 import com.ming.train.common.exception.BusinessExceptionEnum;
+import com.ming.train.common.util.SnowUtil;
 import com.ming.train.member.domain.Member;
 import com.ming.train.member.domain.MemberExample;
 import com.ming.train.member.mapper.MemberMapper;
@@ -35,7 +36,8 @@ public class MemberService {
         }
 
         Member member = new Member();
-        member.setId(System.currentTimeMillis());
+        // 生成雪花算法 id 参数1：终端ID  参数2：数据中心ID
+        member.setId(SnowUtil.getSnowflakeNextId());
         member.setMobile(mobile);
         memberMapper.insert(member);
         return member.getId();
