@@ -1,10 +1,13 @@
 package com.ming.train.member.req;
 
+import jakarta.validation.constraints.NotBlank;
+
 /**
  * @author clownMing
  */
 public class MemberRegisterReq {
 
+    @NotBlank(message = "【手机号】不能为空")
     String mobile;
 
     public MemberRegisterReq() {
