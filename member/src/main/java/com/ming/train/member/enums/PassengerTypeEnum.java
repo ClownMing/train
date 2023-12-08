@@ -1,5 +1,10 @@
 package com.ming.train.member.enums;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * @author clownMing
  */
@@ -25,6 +30,18 @@ public enum PassengerTypeEnum {
 
     public String getDesc() {
         return desc;
+    }
+
+    public static List<HashMap<String, String>> getEnumList() {
+
+        List<HashMap<String, String>> list = new ArrayList<>();
+        for (PassengerTypeEnum item : EnumSet.allOf(PassengerTypeEnum.class)) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("code", item.code);
+            map.put("desc", item.desc);
+            list.add(map);
+        }
+        return list;
     }
 
 }
