@@ -3,6 +3,8 @@ package com.ming.train.member.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.ming.train.common.context.LoginMemberContext;
 import com.ming.train.common.util.SnowUtil;
 import com.ming.train.member.domain.Passenger;
@@ -41,8 +43,10 @@ public class PassengerService {
         if(ObjectUtil.isNotNull(req.getMemberId())) {
             criteria.andMemberIdEqualTo(req.getMemberId());
         }
+        // 对这句往下遇到的第一个sql做拦截，增加分页limit
+        Page<Object> page = PageHelper.startPage(req.getPage(), req.getSize());
         List<Passenger> passengerList = passengerMapper.selectByExample(passengerExample);
-        List<PassengerQueryResp> respList = BeanUtil.copyToList(passengerList, PassengerQueryResp.class);
-        return respList;
+        return BeanUtil.copyToList(passengerList, PassengerQueryResp.class);
+
     }
 }

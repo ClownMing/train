@@ -1,6 +1,8 @@
 package com.ming.train.member.req;
 
-public class PassengerQueryReq {
+import com.ming.train.common.req.PageReq;
+
+public class PassengerQueryReq  extends PageReq {
     private Long memberId;
 
     public Long getMemberId() {
