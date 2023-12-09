@@ -36,6 +36,12 @@ public class PassengerService {
     public void save(PassengerSaveReq req) {
         DateTime now = DateTime.now();
         Passenger passenger = BeanUtil.copyProperties(req, Passenger.class);
+        if(ObjectUtil.isNotNull(passenger.getId())) {
+            // 说明是更新请求
+            passenger.setUpdateTime(now);
+            passengerMapper.updateByPrimaryKey(passenger);
+        }
+        // 说明是添加请求
         passenger.setId(SnowUtil.getSnowflakeNextId());
         passenger.setMemberId(LoginMemberContext.getId());
         passenger.setCreateTime(now);
