@@ -1,0 +1,20 @@
+
+###
+GET http://localhost:8000/business/admin/train/gen-seat/G1
+Accept: application/json
+
+
+
+###
+POST http://localhost:8000/member/member/login
+Content-Type: application/json
+
+{
+  "mobile": "18093885990",
+  "code": "8888"
+}
+
+> {%
+client.log(JSON.stringify(response.body));
+client.global.set("token", response.body.content.token);
+%}
