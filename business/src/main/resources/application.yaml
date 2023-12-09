@@ -1,0 +1,15 @@
+server:
+  port: 8002
+  servlet:
+    context-path: /business
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/train_business?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: train_business
+    password: 775821
+  devtools:
+    livereload:
+      # 防止热部署端口冲突
+      port: 35732
