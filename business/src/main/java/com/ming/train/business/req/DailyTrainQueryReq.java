@@ -7,6 +7,9 @@ import java.util.Date;
 
 public class DailyTrainQueryReq extends PageReq {
 
+    /**
+     * GET 请求不能使用 JsonFormat
+     */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
