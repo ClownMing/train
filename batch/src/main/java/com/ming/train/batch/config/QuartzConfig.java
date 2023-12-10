@@ -3,11 +3,12 @@ package com.ming.train.batch.config;
 import com.ming.train.batch.job.QuartzJob;
 import org.quartz.*;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author clownMing
  */
-//@Configuration
+@Configuration
 public class QuartzConfig {
 
     /**
@@ -27,7 +28,7 @@ public class QuartzConfig {
     @Bean
     public Trigger trigger() {
         ScheduleBuilder<CronTrigger> scheduleBuilder =
-                CronScheduleBuilder.cronSchedule("0/5 * * * * ?");
+                CronScheduleBuilder.cronSchedule("0/2 * * * * ?");
         return TriggerBuilder.newTrigger()
                 .forJob(jobDetail())
                 .withSchedule(scheduleBuilder).build();
