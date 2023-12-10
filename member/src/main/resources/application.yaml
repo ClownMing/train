@@ -4,6 +4,8 @@ server:
   servlet:
     context-path: /member
 spring:
+  application:
+    name: member
   devtools:
     livereload:
       # 防止热部署端口冲突

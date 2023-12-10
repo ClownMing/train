@@ -13,6 +13,8 @@ spring:
     livereload:
       # 防止热部署端口冲突
       port: 35732
+  application:
+    name: business
 # mybatis xml 路径
 mybatis:
   mapper-locations: classpath:/mapper/**/*.xml
