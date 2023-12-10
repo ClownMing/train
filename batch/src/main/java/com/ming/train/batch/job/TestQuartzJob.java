@@ -9,7 +9,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
  * @author clownMing
  */
 @DisallowConcurrentExecution
-public class QuartzJob extends QuartzJobBean {
+public class TestQuartzJob extends QuartzJobBean {
 
     static int count = 0;
 
