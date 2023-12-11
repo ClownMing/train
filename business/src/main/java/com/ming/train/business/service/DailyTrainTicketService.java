@@ -144,13 +144,13 @@ public class DailyTrainTicketService {
 
         DateTime now = DateTime.now();
         for (int i = 0; i < stationList.size(); i++) {
-            // 得到出发站
+            // 出发站
             TrainStation trainStationStart = stationList.get(i);
             BigDecimal sumKM = BigDecimal.ZERO;
             for (int j = (i + 1); j < stationList.size(); j++) {
+                // 终点站
                 TrainStation trainStationEnd = stationList.get(j);
                 sumKM = sumKM.add(trainStationEnd.getKm());
-
                 DailyTrainTicket dailyTrainTicket = new DailyTrainTicket();
                 dailyTrainTicket.setId(SnowUtil.getSnowflakeNextId());
                 dailyTrainTicket.setDate(date);
