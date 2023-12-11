@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import javax.sql.DataSource;
+import java.io.IOException;
 
 /**
  * @author clownMing
@@ -18,12 +19,13 @@ public class SchedulerConfig {
     private MyJobFactory myJobFactory;
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean(@Qualifier("dataSource") DataSource dataSource) {
-        SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
-        factoryBean.setDataSource(dataSource);
-        factoryBean.setJobFactory(myJobFactory);
-        factoryBean.setStartupDelay(2);
-        return factoryBean;
+    public SchedulerFactoryBean schedulerFactoryBean(@Qualifier("dataSource") DataSource dataSource) throws IOException {
+        SchedulerFactoryBean factory = new SchedulerFactoryBean();
+        factory.setDataSource(dataSource);
+        factory.setJobFactory(myJobFactory);
+        factory.setStartupDelay(2);
+        return factory;
     }
+
 
 }

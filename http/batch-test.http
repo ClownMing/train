@@ -17,6 +17,6 @@ POST http://localhost:8000/batch/admin/job/run
 Content-Type: application/json
 
 {
-"name": "com.ming.train.batch.job.DailyTrainJob",
+"name": "com.ming.train.batch.job.TestQuartzJob",
 "jobGroupName": "default"
 }

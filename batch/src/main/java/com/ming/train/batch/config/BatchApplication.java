@@ -1,6 +1,5 @@
 package com.ming.train.batch.config;
 
-import com.ming.train.batch.feign.BusinessFeign;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +13,9 @@ import org.springframework.core.env.Environment;
  * @author clownMing
  */
 @SpringBootApplication
-@ComponentScan("com.ming.train")
+@ComponentScan("com.ming")
 @MapperScan("com.ming.train.*.mapper")
-@EnableFeignClients(clients = {BusinessFeign.class})
+@EnableFeignClients("com.ming.train.batch.feign")
 public class BatchApplication {
     private static final Logger LOG = LoggerFactory.getLogger(BatchApplication.class);
 
