@@ -52,6 +52,6 @@
         </javaClientGenerator>
 
         <!-- 要生成的表：tableName - 数据库中的表名或视图名，domainObjectName - 实体类名 -->
-        <table tableName="daily_train_station" domainObjectName="DailyTrainStation"/>
+        <table tableName="daily_train_ticket" domainObjectName="DailyTrainTicket"/>
     </context>
 </generatorConfiguration>
