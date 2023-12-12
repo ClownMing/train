@@ -220,43 +220,6 @@ public class ConfirmOrderService {
         }
     }
 
-    private static void reduceTickets(ConfirmOrderDoReq req, DailyTrainTicket dailyTrainTicket) {
-        for (ConfirmOrderTicketReq ticketReq : req.getTickets()) {
-            String seatTypeCode = ticketReq.getSeatTypeCode();
-            SeatTypeEnum seatTypeEnum = EnumUtil.getBy(SeatTypeEnum::getCode, seatTypeCode);
-            switch (seatTypeEnum) {
-                case YDZ -> {
-                    int countLeft = dailyTrainTicket.getYdz() - 1;
-                    if (countLeft < 0) {
-                        throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_TICKET_COUNT_ERROR);
-                    }
-                    dailyTrainTicket.setYdz(countLeft);
-                }
-                case EDZ -> {
-                    int countLeft = dailyTrainTicket.getEdz() - 1;
-                    if (countLeft < 0) {
-                        throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_TICKET_COUNT_ERROR);
-                    }
-                    dailyTrainTicket.setEdz(countLeft);
-                }
-                case RW -> {
-                    int countLeft = dailyTrainTicket.getRw() - 1;
-                    if (countLeft < 0) {
-                        throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_TICKET_COUNT_ERROR);
-                    }
-                    dailyTrainTicket.setRw(countLeft);
-                }
-                case YW -> {
-                    int countLeft = dailyTrainTicket.getYw() - 1;
-                    if (countLeft < 0) {
-                        throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_TICKET_COUNT_ERROR);
-                    }
-                    dailyTrainTicket.setYw(countLeft);
-                }
-            }
-        }
-    }
-
 
     /**
      * 查询前面有几个人在排队
@@ -328,8 +291,9 @@ public class ConfirmOrderService {
         // 查出余票记录，需要得到真实的库存
         DailyTrainTicket dailyTrainTicket = dailyTrainTicketService.selectByUnique(date, trainCode, start, end);
         LOG.info("查出余票记录：{}", dailyTrainTicket);
-        // 扣减余票数量，并判断余票是否足够(这里是预扣减，在Java类里扣减，不能直接更新到数据库)
 
+        // 预扣减余票数量，并判断余票是否足够(这里是预扣减，在Java类里扣减，不能直接更新到数据库)
+        reduceTickets(req, dailyTrainTicket);
         // 选座
         // 一个车厢一个车厢的获取座位数据
 
@@ -340,5 +304,42 @@ public class ConfirmOrderService {
         // 余票详情表修改余票
         // 为会员增加购票记录
         // 更新确认订单为成功
+    }
+
+    private static void reduceTickets(ConfirmOrderDoReq req, DailyTrainTicket dailyTrainTicket) {
+        for (ConfirmOrderTicketReq ticketReq : req.getTickets()) {
+            String seatTypeCode = ticketReq.getSeatTypeCode();
+            SeatTypeEnum seatTypeEnum = EnumUtil.getBy(SeatTypeEnum::getCode, seatTypeCode);
+            switch (seatTypeEnum) {
+                case YDZ -> {
+                    int countLeft = dailyTrainTicket.getYdz() - 1;
+                    if(countLeft < 0) {
+                        throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_TICKET_COUNT_ERROR);
+                    }
+                    dailyTrainTicket.setYdz(countLeft);
+                }
+                case EDZ -> {
+                    int countLeft = dailyTrainTicket.getEdz() - 1;
+                    if(countLeft < 0) {
+                        throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_TICKET_COUNT_ERROR);
+                    }
+                    dailyTrainTicket.setEdz(countLeft);
+                }
+                case RW -> {
+                    int countLeft = dailyTrainTicket.getRw() - 1;
+                    if(countLeft < 0) {
+                        throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_TICKET_COUNT_ERROR);
+                    }
+                    dailyTrainTicket.setRw(countLeft);
+                }
+                case YW -> {
+                    int countLeft = dailyTrainTicket.getYw() - 1;
+                    if(countLeft < 0) {
+                        throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_TICKET_COUNT_ERROR);
+                    }
+                    dailyTrainTicket.setYw(countLeft);
+                }
+            }
+        }
     }
 }
