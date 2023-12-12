@@ -11,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ming.train.business.domain.*;
 import com.ming.train.business.enums.ConfirmOrderStatusEnum;
+import com.ming.train.business.enums.SeatColEnum;
 import com.ming.train.business.enums.SeatTypeEnum;
 import com.ming.train.business.mapper.ConfirmOrderMapper;
 import com.ming.train.business.req.ConfirmOrderDoReq;
@@ -273,6 +274,7 @@ public class ConfirmOrderService {
         String trainCode = req.getTrainCode();
         String start = req.getStart();
         String end = req.getEnd();
+        List<ConfirmOrderTicketReq> tickets = req.getTickets();
         // 保存确认订单表，状态初始
         DateTime now = DateTime.now();
         ConfirmOrder confirmOrder = new ConfirmOrder();
@@ -286,7 +288,7 @@ public class ConfirmOrderService {
         confirmOrder.setStatus(ConfirmOrderStatusEnum.INIT.getCode());
         confirmOrder.setCreateTime(now);
         confirmOrder.setUpdateTime(now);
-        confirmOrder.setTickets(JSON.toJSONString(req.getTickets()));
+        confirmOrder.setTickets(JSON.toJSONString(tickets));
         confirmOrderMapper.insert(confirmOrder);
         // 查出余票记录，需要得到真实的库存
         DailyTrainTicket dailyTrainTicket = dailyTrainTicketService.selectByUnique(date, trainCode, start, end);
@@ -294,6 +296,42 @@ public class ConfirmOrderService {
 
         // 预扣减余票数量，并判断余票是否足够(这里是预扣减，在Java类里扣减，不能直接更新到数据库)
         reduceTickets(req, dailyTrainTicket);
+
+        // 计算相对第一个座位的偏移值
+        // 比如选择的是C1, D2，则偏移值是：[0, 5]
+        // 比如选择的是A1, B1, C1，则偏移值是：[0, 1, 2]
+        ConfirmOrderTicketReq ticketReq0 = tickets.get(0);
+        if(StrUtil.isNotBlank(ticketReq0.getSeat())) {
+            LOG.info("本次购票有选座");
+            // 查出本地选座的作为类型都有哪些列，用于计算所选作为与第一个座位的偏移值
+            List<SeatColEnum> colEnumList = SeatColEnum.getColsByType(ticketReq0.getSeatTypeCode());
+            LOG.info("本次选座的座位类型包含的列：{}", colEnumList);
+            // 组成和前端两排选座一样的列表，用于作参照的作为列表，例：referSeatList = {A1, C1, D1, F1, A2, C2, D2, F2}
+            List<String> referSeatList = new ArrayList<>();
+            for(int i = 1; i <= 2; i ++) {
+                for (SeatColEnum seatColEnum : colEnumList) {
+                    referSeatList.add(seatColEnum.getCode() + i);
+                }
+            }
+            LOG.info("用于作参照的两排作为：{}", referSeatList);
+            // 获取绝对偏移值，即：在参照作为列表中的位置
+            List<Integer> absoluteOffsetList = new ArrayList<>();
+            for (ConfirmOrderTicketReq ticketReq : tickets) {
+                int index = referSeatList.indexOf(ticketReq.getSeat());
+                absoluteOffsetList.add(index);
+            }
+            LOG.info("计算得到所有座位的绝对偏移值：{}", absoluteOffsetList);
+            // 计算相对偏移值
+            List<Integer> offsetList = new ArrayList<>();
+            for (Integer index : absoluteOffsetList) {
+                offsetList.add(index - absoluteOffsetList.get(0));
+            }
+            LOG.info("计算得到所有座位的相对第一个座位的偏移值：{}", offsetList);
+
+        }else {
+            LOG.info("本次购票没有选座");
+        }
+
         // 选座
         // 一个车厢一个车厢的获取座位数据
 
