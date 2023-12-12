@@ -3,7 +3,7 @@ package com.ming.train.business.req;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class ConfirmOrderTicketReq {
+public class  ConfirmOrderTicketReq {
 
     /**
      * 乘客ID
