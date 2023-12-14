@@ -1,11 +1,9 @@
 # 应用服务 WEB 访问端口
 server:
-  port: 8001
+  port: 8004
   servlet:
     context-path: /member
 spring:
-  application:
-    name: member
   devtools:
     livereload:
       # 防止热部署端口冲突
