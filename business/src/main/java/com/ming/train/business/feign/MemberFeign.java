@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * @author clownMing
  */
-@FeignClient(name = "member", url = "http://127.0.0.1:8001")
+@FeignClient("member")
+//@FeignClient(name = "member", url = "http://127.0.0.1:8001")
 public interface MemberFeign {
 
-    @PostMapping("/member/feign/ticket/save")
+    @PostMapping("/member/member/feign/ticket/save")
     CommonResp<Object> save(@Valid @RequestBody MemberTicketReq req);
 
 }
