@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
+        group: train-project
+  #      config:
+  #        server-addr: 127.0.0.1:8848
+  #        file-extension: yaml
+  #        namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
+  #        group: train-project
+  application:
+    name: gateway
