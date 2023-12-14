@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
 
-    @Value("{test.hello}")
-    private String hello;
+    @Value("${test.nacos}")
+    private String nacos;
 
     @GetMapping("/hello")
     public String testNacos() {
-        return "get the value >>>" + hello;
+        return "get the value >>>" + nacos;
     }
 }
