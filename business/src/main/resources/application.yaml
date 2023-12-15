@@ -15,7 +15,10 @@ spring:
       port: 35732
   application:
     name: business
-
+  data:
+    redis:
+      host: 192.168.29.130
+      port: 6379
 # mybatis xml 路径
 mybatis:
   configuration:
@@ -29,3 +32,4 @@ logging:
         train:
           business:
             mapper: trace
+
