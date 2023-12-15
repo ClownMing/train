@@ -15,8 +15,12 @@ spring:
       port: 35732
   application:
     name: business
+
 # mybatis xml 路径
 mybatis:
+  configuration:
+    # 每执行一个sql，就清空本地缓存，相当于关闭了一级缓存（要打开事务 ->> @Transactional）
+    local-cache-scope: statement
   mapper-locations: classpath:/mapper/**/*.xml
 logging:
   level:
