@@ -19,6 +19,14 @@ spring:
     redis:
       host: 192.168.29.130
       port: 6379
+  cache:
+    type: redis
+    redis:
+      use-key-prefix: true
+      key-prefix: train_cache_
+      # 允许Springboot缓存 null
+      cache-null-values: true
+      time-to-live: 60s
 # mybatis xml 路径
 mybatis:
   configuration:

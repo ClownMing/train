@@ -15,3 +15,11 @@ spring:
     active: dev
   application:
     name: member
+
+seata:
+  tx-service-group: train-group
+  service:
+    vgroup-mapping:
+      train-group: default
+    grouplist:
+      default: 127.0.0.1:8091
