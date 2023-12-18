@@ -37,8 +37,12 @@ seata:
       username: nacos
       password: nacos
       data-id: seataServer.yaml
-
-  tx-service-group: train-group
+#  tx-service-group: train-group
+#
+#
+#
+#
+#
 #  service: # 有了配置中心就不用配置了
 #    vgroup-mapping: # 有了配置中心就不用配置了
 #      train-group: default # 有了配置中心就不用配置了
