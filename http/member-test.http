@@ -1,4 +1,4 @@
-GET http://localhost:8001/member/test/get
+GET http://localhost:8010/member/test/hello
 Accept: application/json
 
 ###
@@ -6,12 +6,8 @@ GET http://localhost:8000/member/member/count
 
 
 ###
-POST http://localhost:8000/member/member/register
-Content-Type: application/json
-
-{
-  "mobile": "18093885990"
-}
+GET http://localhost:8010/member/register
+Accept: application/json
 
 ###
 POST http://localhost:8000/member/member/send-code

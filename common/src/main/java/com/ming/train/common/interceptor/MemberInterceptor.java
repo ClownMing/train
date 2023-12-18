@@ -27,17 +27,17 @@ public class MemberInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        LOG.info(">>>>> MemberInterceptor拦截开始 >>>>>");
         // 获取header的token参数
         String token = request.getHeader("token");
         if(StrUtil.isNotBlank(token)) {
             LOG.info("gateway loginMemberFilter验证该token > {} 通过", token.substring(0, 20));
-            LOG.info(">>>>> common MemberInterceptor拦截开始 >>>>>");
             LOG.info("获取会员登录token：{}", token);
             JSONObject memberJsonObject = JwtUtils.getJSONObject(token);
             LOG.info("当前登录会员：{}", memberJsonObject);
             LoginMemberContext.setMember(JSONUtil.toBean(memberJsonObject, MemberLoginResp.class));
         }
-        LOG.info(">>>>> common MemberInterceptor拦截结束 >>>>>");
+        LOG.info(">>>>> MemberInterceptor拦截结束 >>>>>");
         return true;
     }
 }
