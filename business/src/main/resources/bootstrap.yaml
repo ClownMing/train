@@ -10,7 +10,20 @@ spring:
         file-extension: yaml
         namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
         group: train-project
-  ## \u542F\u52A8\u73AF\u5883\uFF0Cnacos\u4F1A\u6839\u636E\u73AF\u5883\u8BFB\u4E0D\u540C\u7684\u914D\u7F6EdateId\uFF1Amember-dev.yaml
+    # sentinel控制台
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8090
+      # sentinel + nacos
+      datasource:
+        nacos:
+          nacos:
+            server-addr: localhost:8848
+            namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
+            group-id: TRAIN_GROUP
+            data-id: sentinel
+            rule-type: flow
   profiles:
     active: dev
   application:
