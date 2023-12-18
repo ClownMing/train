@@ -28,9 +28,6 @@ spring:
       cache-null-values: true
       time-to-live: 60s
   cloud:
-    nacos:
-      discovery:
-        group:
     # sentinel控制台
     sentinel:
       transport:

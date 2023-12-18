@@ -16,27 +16,27 @@ spring:
   application:
     name: business
 
-seata:
-  # 注册中心
-  registry:
-    type: nacos
-    nacos:
-      application: seata-server
-      server-addr: 127.0.0.1:8848
-      group: SEATA_GROUP
-      namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
-      username: nacos
-      password: nacos
-  #配置中心
-  config:
-    type: nacos
-    nacos:
-      server-addr: 127.0.0.1:8848
-      namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
-      group: SEATA_GROUP
-      username: nacos
-      password: nacos
-      data-id: seataServer.yaml
+#seata:
+#  # 注册中心
+#  registry:
+#    type: nacos
+#    nacos:
+#      application: seata-server
+#      server-addr: 127.0.0.1:8848
+#      group: SEATA_GROUP
+#      namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
+#      username: nacos
+#      password: nacos
+#  #配置中心
+#  config:
+#    type: nacos
+#    nacos:
+#      server-addr: 127.0.0.1:8848
+#      namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
+#      group: SEATA_GROUP
+#      username: nacos
+#      password: nacos
+#      data-id: seataServer.yaml
 #
 #  tx-service-group: train-group
 
