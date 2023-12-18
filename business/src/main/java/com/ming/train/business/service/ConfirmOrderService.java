@@ -287,17 +287,17 @@ public class ConfirmOrderService {
      */
     public void doConfirm(ConfirmOrderDoReq req) {
         String lockKey = req.getDate() + "-" + req.getTrainCode();
-        try {
-            // 多个人抢同一个车次，可能发生超卖；多个人抢不同车次，就互不影响了  ->> pass synchronized
-            Boolean lock = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, String.valueOf(Thread.currentThread().getId()), 3600, TimeUnit.SECONDS);
-            if (lock) {
-                LOG.info("恭喜，抢到锁了");
-            } else {
-                // 只是没抢到锁，并不知道票抢完了没，所以提示稍后再试
-                LOG.info("很遗憾，没抢到锁");
-                throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_LOCK_FAIL);
-            }
+        // 多个人抢同一个车次，可能发生超卖；多个人抢不同车次，就互不影响了  ->> pass synchronized
+        Boolean lock = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, String.valueOf(Thread.currentThread().getId()), 3600, TimeUnit.SECONDS);
+        if (lock) {
+            LOG.info("恭喜，抢到锁了");
+        } else {
+            // 只是没抢到锁，并不知道票抢完了没，所以提示稍后再试
+            LOG.info("很遗憾，没抢到锁");
+            throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_LOCK_FAIL);
+        }
 
+        try {
             //省略业务数据校验，如：车次是否存在，余票是否存在，车次是否在有效期内，tickets条数>0，同乘客同车次是否已买过
             Date date = req.getDate();
             String trainCode = req.getTrainCode();
