@@ -17,9 +17,33 @@ spring:
     name: member
 
 seata:
+  # 注册中心
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
+      username: nacos
+      password: nacos
+  #配置中心
+  config:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+      data-id: seataServer.yaml
+
   tx-service-group: train-group
-  service:
-    vgroup-mapping:
-      train-group: default
-    grouplist:
-      default: 127.0.0.1:8091
+#  service: # 有了配置中心就不用配置了
+#    vgroup-mapping: # 有了配置中心就不用配置了
+#      train-group: default # 有了配置中心就不用配置了
+#    grouplist: # 有了配置中心就不用配置了
+#      default: 127.0.0.1:8091 # 有了配置中心就不用配置了
+
+# 这上面的配置要移动到nacos的配置中心上去
+# 和微服务模块的seata.tx-service-group保持一致
