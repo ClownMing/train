@@ -27,6 +27,15 @@ spring:
       # 允许Springboot缓存 null
       cache-null-values: true
       time-to-live: 60s
+  cloud:
+    nacos:
+      discovery:
+        group:
+    # sentinel控制台
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8090
 # mybatis xml 路径
 mybatis:
   configuration:
