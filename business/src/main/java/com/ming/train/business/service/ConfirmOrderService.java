@@ -3,6 +3,7 @@ package com.ming.train.business.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
@@ -13,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ming.train.business.domain.*;
 import com.ming.train.business.enums.ConfirmOrderStatusEnum;
+import com.ming.train.business.enums.RedisKeyPreEnum;
 import com.ming.train.business.enums.SeatColEnum;
 import com.ming.train.business.enums.SeatTypeEnum;
 import com.ming.train.business.mapper.ConfirmOrderMapper;
@@ -301,7 +303,7 @@ public class ConfirmOrderService {
             throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_SK_TOKEN_FAIL);
         }
         // 下面为允许购票逻辑
-        String lockKey = req.getDate() + "-" + req.getTrainCode();
+        String lockKey = RedisKeyPreEnum.CONFIRM_ORDER + "-" + DateUtil.formatDate(req.getDate()) + "-" + req.getTrainCode();
         // 多个人抢同一个车次，可能发生超卖；多个人抢不同车次，就互不影响了  ->> pass synchronized
         Boolean lock = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, String.valueOf(Thread.currentThread().getId()), 3600, TimeUnit.SECONDS);
         if (lock) {
