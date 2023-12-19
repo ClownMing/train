@@ -12,18 +12,29 @@ spring:
         group: train-project
     # sentinel控制台
     sentinel:
+      # 流控模式是链路时，必须关闭这个配置，默认是ture，为ture时可以在控台-簇点链路界面看到所有请求都在一个链路下面
+      web-context-unify: false
       transport:
         port: 8719
         dashboard: localhost:8090
       # sentinel + nacos
       datasource:
-        nacos:
+        # 限流配置
+        flow:
           nacos:
             server-addr: localhost:8848
             namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
-            group-id: TRAIN_GROUP
-            data-id: sentinel
+            group-id: train-project
+            data-id: sentinel-business-flow
             rule-type: flow
+        # 熔断配置
+  #     degrade:
+#          nacos:
+#           server-addr: localhost:8848
+#           namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
+#           group-id: train-project
+#           data-id: sentinel-business-degrade
+#           rule-type: degrade
   profiles:
     active: dev
   application:

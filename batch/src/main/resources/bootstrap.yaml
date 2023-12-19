@@ -10,8 +10,28 @@ spring:
         file-extension: yaml
         namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
         group: train-project
-  ## \u542F\u52A8\u73AF\u5883\uFF0Cnacos\u4F1A\u6839\u636E\u73AF\u5883\u8BFB\u4E0D\u540C\u7684\u914D\u7F6EdateId\uFF1Amember-dev.yaml
+    # sentinel 控台
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8090
+      # sentinel + nacos + 熔断
+      datasource:
+        degrade:
+          nacos:
+            server-addr: localhost:8848
+            namespace: 0e87ff4c-6652-423e-8426-bc1cd937cc3e
+            group-id: train-project
+            data-id: sentinel-batch-degrade
+            rule-type: degrade
+    # 开启feign对sentinel支持后，启动会报注入失败，需改成懒加载(本人使用时未报错)
+    openfeign:
+      lazy-attributes-resolution: true
   profiles:
     active: dev
   application:
     name: batch
+feign:
+  sentinel:
+    # sentinel默认不监控feign，需改成true, 在簇点链路界面会显示资源
+    enabled: true
