@@ -59,6 +59,9 @@ public class ConfirmOrderService {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    @Resource
+    private SkTokenService skTokenService;
+
 //    @Resource
 //    private RedissonClient redissonClient;
 
@@ -289,6 +292,15 @@ public class ConfirmOrderService {
      */
     @SentinelResource(value = "doConfirm", blockHandler = "doConfirmBlock") //
     public void doConfirm(ConfirmOrderDoReq req) {
+        // 校验令牌余量
+        boolean validSkToken = skTokenService.validSkToken(req.getDate(), req.getTrainCode(),req.getMemberId());
+        if(validSkToken) {
+            LOG.info("令牌校验通过");
+        } else {
+            LOG.info("令牌校验不通过");
+            throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_SK_TOKEN_FAIL);
+        }
+        // 下面为允许购票逻辑
         String lockKey = req.getDate() + "-" + req.getTrainCode();
         // 多个人抢同一个车次，可能发生超卖；多个人抢不同车次，就互不影响了  ->> pass synchronized
         Boolean lock = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, String.valueOf(Thread.currentThread().getId()), 3600, TimeUnit.SECONDS);
