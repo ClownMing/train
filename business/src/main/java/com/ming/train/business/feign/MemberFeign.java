@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 //@FeignClient(name = "member", url = "http://127.0.0.1:8001")
 public interface MemberFeign {
 
-    @PostMapping("/member/member/feign/ticket/save")
+    @PostMapping("/member/feign/ticket/save")
     CommonResp<Object> save(@Valid @RequestBody MemberTicketReq req);
 
 }
