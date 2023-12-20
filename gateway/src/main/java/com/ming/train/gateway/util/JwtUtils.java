@@ -25,6 +25,7 @@ public class JwtUtils {
     private static final String key = "clownMing";
 
     public static String createToken(Map<String, Object> map) {
+        GlobalBouncyCastleProvider.setUseBouncyCastle(false);
         LOG.info("开始生成JWT token....");
         DateTime now = DateTime.now();
         DateTime expTime = now.offsetNew(DateField.HOUR, 24);
@@ -50,11 +51,11 @@ public class JwtUtils {
     }
 
     public static JSONObject getJSONObject(String token) {
+        GlobalBouncyCastleProvider.setUseBouncyCastle(false);
         boolean validate = validate(token);
         if(!validate) {
             return null;
         }
-        GlobalBouncyCastleProvider.setUseBouncyCastle(false);
         JWT jwt = JWTUtil.parseToken(token).setKey(key.getBytes());
         JSONObject payloads = jwt.getPayloads();
         payloads.remove(JWTPayload.ISSUED_AT);
