@@ -1,7 +1,7 @@
 package com.ming.train.business.controller;
 
 import com.ming.train.business.req.ConfirmOrderDoReq;
-import com.ming.train.business.service.ConfirmOrderService;
+import com.ming.train.business.service.BeforeConfirmOrderService;
 import com.ming.train.common.resp.CommonResp;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -21,7 +21,7 @@ public class ConfirmOrderController {
     private static final Logger LOG = LoggerFactory.getLogger(ConfirmOrderController.class);
 
     @Resource
-    private ConfirmOrderService confirmOrderService;
+    private BeforeConfirmOrderService beforeConfirmOrderService;
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
@@ -44,7 +44,7 @@ public class ConfirmOrderController {
             // 验证通过后，移除验证码
             stringRedisTemplate.delete(imageCodeToken);
         }
-        confirmOrderService.doConfirm(req);
+        beforeConfirmOrderService.beforeDoConfirm(req);
         return new CommonResp<>();
     }
 
