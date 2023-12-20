@@ -7,6 +7,7 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,9 @@ public class ConfirmOrderController {
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+
+    @Value("${spring.profiles.active}")
+    private String env;
 
     @PostMapping("/do")
     public CommonResp<Object> doConfirm(@Valid @RequestBody ConfirmOrderDoReq req) {

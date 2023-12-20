@@ -20,6 +20,7 @@ import com.ming.train.common.util.SnowUtil;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,9 @@ public class SkTokenService {
 
     @Resource
     private SkTokenMapperCust skTokenMapperCust;
+
+    @Value("${spring.profiles.active")
+    private String env;
 
     private static final Logger LOG = LoggerFactory.getLogger(SkTokenService.class);
 
