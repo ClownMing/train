@@ -422,12 +422,12 @@ public class ConfirmOrderService {
             }
         } finally {
             // 删除分布式锁
-//            LOG.info("购票流程结束，释放锁");
+            LOG.info("购票流程结束，释放锁");
             // 防止误删除锁
-//            String redisThreadId = stringRedisTemplate.opsForValue().get(lockKey);
-//            if (String.valueOf(Thread.currentThread().getId()).equals(redisThreadId)) {
-//                stringRedisTemplate.delete(lockKey);
-//            }
+            String redisThreadId = stringRedisTemplate.opsForValue().get(lockKey);
+            if (String.valueOf(Thread.currentThread().getId()).equals(redisThreadId)) {
+                stringRedisTemplate.delete(lockKey);
+            }
         }
     }
 
