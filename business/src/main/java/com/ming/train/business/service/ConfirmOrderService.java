@@ -104,8 +104,6 @@ public class ConfirmOrderService {
 
     /**
      * 查询前面有几个人在排队
-     *
-     * @param id
      */
     public Integer queryLineCount(Long id) {
         ConfirmOrder confirmOrder = confirmOrderMapper.selectByPrimaryKey(id);

@@ -2,6 +2,7 @@ package com.ming.train.business.controller;
 
 import com.ming.train.business.req.ConfirmOrderDoReq;
 import com.ming.train.business.service.BeforeConfirmOrderService;
+import com.ming.train.business.service.ConfirmOrderService;
 import com.ming.train.common.resp.CommonResp;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -10,10 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/confirm-order")
@@ -26,6 +24,9 @@ public class ConfirmOrderController {
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+
+    @Resource
+    private ConfirmOrderService confirmOrderService;
 
     @Value("${spring.profiles.active}")
     private String env;
@@ -52,4 +53,10 @@ public class ConfirmOrderController {
         return new CommonResp<>(String.valueOf(id));
     }
 
+
+    @GetMapping("/query-line-count/{id}")
+    public CommonResp<Integer> queryLineCount(@PathVariable Long id) {
+        Integer count = confirmOrderService.queryLineCount(id);
+        return new CommonResp<>(count);
+    }
 }
