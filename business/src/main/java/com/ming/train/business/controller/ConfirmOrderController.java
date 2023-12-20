@@ -48,8 +48,8 @@ public class ConfirmOrderController {
             // 验证通过后，移除验证码
             stringRedisTemplate.delete(imageCodeToken);
         }
-        beforeConfirmOrderService.beforeDoConfirm(req);
-        return new CommonResp<>();
+        Long id = beforeConfirmOrderService.beforeDoConfirm(req);
+        return new CommonResp<>(String.valueOf(id));
     }
 
 }
