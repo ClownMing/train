@@ -28,7 +28,9 @@ import com.ming.train.common.resp.PageResp;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -288,8 +290,11 @@ public class ConfirmOrderService {
     /**
      * redis 分布式锁方案
      */
+    @Async
     @SentinelResource(value = "doConfirm", blockHandler = "doConfirmBlock") //
     public void doConfirm(ConfirmOrderMQDto req) {
+        MDC.put("LOG_ID", req.getLogId());
+        LOG.info("异步出票开始：{}", req);
         // 获取车次锁
         String lockKey = RedisKeyPreEnum.CONFIRM_ORDER + "-" + DateUtil.formatDate(req.getDate()) + "-" + req.getTrainCode();
         // 多个人抢同一个车次，可能发生超卖；多个人抢不同车次，就互不影响了  ->> pass synchronized

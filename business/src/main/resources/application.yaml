@@ -42,7 +42,7 @@ logging:
           business:
             mapper: trace
 
-rocketmq:
-  name-server: http://localhost:9876
-  producer:
-    group: default
+#rocketmq:
+#  name-server: http://localhost:9876
+#  producer:
+#    group: default

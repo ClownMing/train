@@ -13,6 +13,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.List;
 // 开启SpringBoot内置缓存
 @EnableDiscoveryClient
 @EnableCaching
+@EnableAsync
 public class BusinessApplication {
     private static final Logger LOG = LoggerFactory.getLogger(BusinessApplication.class);
 
